@@ -4,7 +4,7 @@ public class Test13 {
   public static void main(String[] args) {
     java.util.Date today = new java.util.Date();
     
-    System.out.printf("%1$tY, %1$ty\n", today);
+    System.out.printf("%tY, %1$ty\n", today);
     
     System.out.printf("%1$tB, %1$tb\n", today);
     

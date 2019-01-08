@@ -1,28 +1,48 @@
 package bitcamp.lms;
+import java.util.Scanner;
+import java.sql.Date;
 
 public class App {
- public static void main(String[] args) {
-   java.util.Scanner kb = new java.util.Scanner(System.in);
-   java.util.Date today = new java.util.Date();
-     System.out.print("번호: ");
-     int num = kb.nextInt();
-     kb.nextLine();
-     System.out.println("수업명: ");
-     String java = kb.nextLine();
-     System.out.println("설명: ");
-     String sp = kb.nextLine();
-     System.out.println("시작일: ");
-     String st = kb.nextLine();
-     System.out.println("종료일: ");
-     String ou = kb.nextLine();
-     System.out.println("총수업시간: ");
-     String ti = kb.nextLine();
-     System.out.println("일수업시간: ");
-     String day = kb.nextLine();
-     kb.close();
-     
-     System.out.printf(" 번호: %d\n 수업명: %s\n 설명: %s\n 시작일: %s\n "
-         + "종료일: %s\n 총수업시간: %s\n 일수업시간: %s" 
-         ,num,java,sp,st,ou,ti,day);
+  public static void main(String[] args) {
+    Scanner kb = new Scanner(System.in);
+    int i = 10;
+    int[] no = new int[i];
+    String[] cl = new String[i];
+    String[] re = new String[i];
+    Date[] st = new Date[i];
+    Date[] ot = new Date[i];
+    int[] am = new int[i];
+    int[] tt = new int[i];
+
+    int j = 0;
+    while (j < 10) {
+      System.out.print("번호: ");
+      no[j] = kb.nextInt();
+      kb.nextLine();
+      System.out.print("수업명: ");
+      cl[j] = kb.nextLine();
+      System.out.print("수업내용: ");
+      re[j] = kb.nextLine();
+      System.out.print("시작일: ");
+      st[j] = Date.valueOf(kb.nextLine());
+      System.out.print("종료일: ");
+      ot[j] = Date.valueOf(kb.nextLine());
+      System.out.print("총수업시간: ");
+      am[j] = Integer.parseInt(kb.nextLine());
+      System.out.print("일수업시간: ");
+      tt[j] = Integer.parseInt(kb.nextLine());
+      j++;
+      System.out.print("계속 입력하시겠습니까?(Y/n)");
+      String li = kb.nextLine();
+      if (!li.equalsIgnoreCase("y") && !li.equalsIgnoreCase("")) {
+        break;
+      }
+      System.out.println();
     }
+    kb.close();
+    System.out.println();
+    for(int n = 0 ; n<j ; n++) {
+      System.out.printf("%s %s ~ %s %d\n",cl[n],st[n],ot[n],am[n]);
+    }
+  }
 }

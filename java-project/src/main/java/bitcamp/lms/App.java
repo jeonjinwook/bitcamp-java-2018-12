@@ -41,8 +41,8 @@ public class App {
     }
     kb.close();
     System.out.println();
-    for(int n = 0 ; n<j ; n++) {
-      System.out.printf("%s %s ~ %s %d\n",cl[n],st[n],ot[n],am[n]);
+    for(int n = 0 ; n < j ; n++) {
+      System.out.printf("%s ,%s~%s ,%d\n",cl[n],st[n],ot[n],am[n]);
     }
   }
 }

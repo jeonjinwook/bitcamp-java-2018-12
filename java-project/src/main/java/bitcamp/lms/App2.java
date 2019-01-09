@@ -47,7 +47,7 @@ public class App2 {
     kb.close();
     System.out.println();
     for(int m = 0 ;m < j ; m++) {
-      System.out.printf("%s , %s , %s ,%s %5$tY-%5$tB-%5$td\n",name[m],com[m],pu[m], ca[m],pl[m]);
+      System.out.printf("%s , %s , %s ,%s %d\n",name[m],com[m],pu[m], ca[m],pl[m]);
     }
   }
 }

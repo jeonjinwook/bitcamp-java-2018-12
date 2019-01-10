@@ -1,30 +1,34 @@
 package bitcamp.lms;
-import java.util.Scanner;
+import java.util.*;
 import java.sql.Date;
 
 public class App3 {
 
   public static void main(String[] args) {
+    int i = 10;
     Scanner kb = new Scanner(System.in);
-    int i = 10; 
-    Board[] s1 = new Board[i];
-    Board s2 = new Board();
+    int[] num = new int[i];
+    String[] ti = new String[i];
+    Date[] pl = new Date[i];
+    int[] vi = new int[i];
+    
+    
     int j = 0;
     while(j < 10){
       System.out.print("번호? ");
-      s2.num = kb.nextInt();
+      num[j] = kb.nextInt();
       kb.nextLine();
       
       System.out.print("내용? ");
-      s2.ti = kb.nextLine();
+      ti[j] = kb.nextLine();
       
-      s2.vi = 0;
+      vi[j] = 0;
       
-      s2.pl = new Date(System.currentTimeMillis());
-      s1[j] = s2;
+      pl[j] = new Date(System.currentTimeMillis());
+      
       j++;
-      System.out.println();
-      System.out.print("계속 입력하시겠습니까?(Y/n)");
+      
+      System.out.println("계속 입력하시겠습니까?(Y/n)");
       String li = kb.nextLine();
       
       if(!li.equalsIgnoreCase("y") && !li.equalsIgnoreCase("")){
@@ -35,8 +39,7 @@ public class App3 {
     kb.close();
     
     for(int m = 0 ; m < j ; m++ ) {
-      System.out.printf("%d %s %s %d\n"
-          , s1[m].num, s1[m].ti, s1[m].pl, s1[m].vi);
+      System.out.printf("%d %s %s %d\n",num[m],ti[m],pl[m],vi[m]);
     }
   }
 }

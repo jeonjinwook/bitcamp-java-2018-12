@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class BoardHandler {
   final static int LENGTH = 10;
-  static Scanner kb = new Scanner(System.in);
+  static Scanner kb;
   static Board[] boards = new Board[LENGTH];
   static int bsize = 0;
   static void addBoard() {

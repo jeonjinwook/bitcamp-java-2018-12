@@ -16,25 +16,25 @@ public class LessonHandler {
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
-    lesson.setNo(Integer.parseInt(this.keyboard.nextLine()));
+    lesson.no = Integer.parseInt(this.keyboard.nextLine());
 
     System.out.print("수업명? ");
-    lesson.setTitle(this.keyboard.nextLine());
+    lesson.title = this.keyboard.nextLine();
 
     System.out.print("설명? ");
-    lesson.setContents(this.keyboard.nextLine());
+    lesson.contents = this.keyboard.nextLine();
 
     System.out.print("시작일? ");
-    lesson.setStartDate(Date.valueOf(this.keyboard.nextLine()));
+    lesson.startDate = Date.valueOf(this.keyboard.nextLine());
 
     System.out.print("종료일? ");
-    lesson.setEndDate(Date.valueOf(this.keyboard.nextLine()));
+    lesson.endDate = Date.valueOf(this.keyboard.nextLine());
 
     System.out.print("총수업시간? ");
-    lesson.setTotalHours(Integer.parseInt(this.keyboard.nextLine()));
+    lesson.totalHours = Integer.parseInt(this.keyboard.nextLine());
 
     System.out.print("일수업시간? ");
-    lesson.setDayHours(Integer.parseInt(this.keyboard.nextLine()));
+    lesson.dayHours = Integer.parseInt(this.keyboard.nextLine());
 
     lessons[this.lessonIdx] = lesson;
     this.lessonIdx++;
@@ -44,8 +44,8 @@ public class LessonHandler {
   public void listLesson() {
     for (int j = 0; j < this.lessonIdx; j++) {
       System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 
-          lessons[j].getNo(), lessons[j].getTitle(), lessons[j].getStartDate(), 
-          lessons[j].getEndDate(), lessons[j].getTotalHours());
+          lessons[j].no, lessons[j].title, lessons[j].startDate, 
+          lessons[j].endDate, lessons[j].totalHours);
     }
   }
 }

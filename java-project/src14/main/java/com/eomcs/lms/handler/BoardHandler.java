@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 
 import java.sql.Date;
-import java.util.Scanner;
 import com.eomcs.lms.domain.Board;
+import java.util.Scanner;
 
 public class BoardHandler {
   Scanner keyboard;
@@ -16,14 +16,14 @@ public class BoardHandler {
     Board board = new Board();
 
     System.out.print("번호? ");
-    board.setNo(Integer.parseInt(this.keyboard.nextLine()));
+    board.no = Integer.parseInt(this.keyboard.nextLine());
 
     System.out.print("내용? ");
-    board.setContents(this.keyboard.nextLine());
+    board.contents = this.keyboard.nextLine();
 
-    board.setCreatedDate(new Date(System.currentTimeMillis())); 
+    board.createdDate = new Date(System.currentTimeMillis()); 
 
-    board.setViewCount(0);
+    board.viewCount = 0;
 
     boards[this.boardIdx] = board;
     this.boardIdx++;
@@ -33,7 +33,7 @@ public class BoardHandler {
   public void listBoard() {
     for (int j = 0; j < this.boardIdx; j++) {
       System.out.printf("%3d, %-20s, %s, %d\n", 
-          boards[j].getNo(), boards[j].getContents(), boards[j].getCreatedDate(), boards[j].getViewCount());
+          boards[j].no, boards[j].contents, boards[j].createdDate, boards[j].viewCount);
     }
   }
 }

@@ -1,9 +1,9 @@
 package com.eomcs.lms;
 
 import java.util.Scanner;
-import com.eomcs.lms.handler.BoardHandler;
 import com.eomcs.lms.handler.LessonHandler;
 import com.eomcs.lms.handler.MemberHandler;
+import com.eomcs.lms.handler.BoardHandler;
 
 public class App {
   public static Scanner keyboard = new Scanner(System.in);

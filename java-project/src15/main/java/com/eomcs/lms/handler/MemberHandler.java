@@ -5,7 +5,6 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 public class MemberHandler {
   Scanner keyboard;
-  MemberList list;
   final int LENGTH = 10;
   Member[] members = new Member[LENGTH];
   int memberIdx = 0;

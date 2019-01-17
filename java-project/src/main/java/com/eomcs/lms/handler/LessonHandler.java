@@ -6,10 +6,9 @@ import java.util.Scanner;
 
 public class LessonHandler {
   Scanner keyboard;
-  LessonList list;
+  ArrayList list = new ArrayList();
   public LessonHandler(Scanner keyboard) {
     this.keyboard = keyboard;
-    this.list = new LessonList(20);
   }
   public void addLesson() {
     Lesson lesson = new Lesson();
@@ -39,11 +38,11 @@ public class LessonHandler {
     System.out.println("저장하였습니다.");
   }
   public void listLesson() {
-   Lesson[] lessons = list.toArray();
-    for (Lesson lesson : lessons) {
+   Object[] lessons = list.toArray();
+    for (Object lesson : lessons) {
       System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 
-          lesson.getNo(), lesson.getTitle(), lesson.getStartDate(), 
-          lesson.getEndDate(), lesson.getTotalHours());
+          ((Lesson)lesson).getNo(), ((Lesson)lesson).getTitle(), ((Lesson)lesson).getStartDate(), 
+          ((Lesson)lesson).getEndDate(), ((Lesson)lesson).getTotalHours());
     }
   }
 }

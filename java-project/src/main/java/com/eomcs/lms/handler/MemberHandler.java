@@ -5,9 +5,7 @@ import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
 public class MemberHandler {
   Scanner keyboard;
-  MemberList list;
-  final int LENGTH = 10;
-  Member[] members = new Member[LENGTH];
+  ArrayList list = new ArrayList();
   int memberIdx = 0;
   public MemberHandler(Scanner keyboard) {
     this.keyboard = keyboard;
@@ -35,15 +33,15 @@ public class MemberHandler {
 
     member.setRegisteredDate(new Date(System.currentTimeMillis())); 
 
-    members[this.memberIdx] = member;        this.memberIdx++;
-
+    list.add(member);
     System.out.println("저장하였습니다.");
   }
   public void listMember() {
-    for (int j = 0; j < this.memberIdx; j++) {
+    Object[] members = list.toArray();
+    for (Object member : members) {
       System.out.printf("%3d, %-4s, %-20s, %-15s, %s\n", 
-          members[j].getNo(), members[j].getName(), members[j].getEmail(), 
-          members[j].getTel(), members[j].getRegisteredDate());
+          ((Member)member).getNo(), ((Member)member).getName(), ((Member)member).getEmail(), 
+          ((Member)member).getTel(), ((Member)member).getRegisteredDate());
     }
   }
 }

@@ -1,3 +1,4 @@
+// 메서드 - 파라미터와 리턴 값
 package ch06;
 
 public class Test04 {
@@ -12,6 +13,7 @@ public class Test04 {
   static String greet(String name) {
     return name + "님 반갑습니다!";
   }
+  
   static int plus(int a, int b) {
     return a + b;
   }

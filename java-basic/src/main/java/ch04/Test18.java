@@ -1,3 +1,5 @@
+// 할당(배정,대입) 연산자 : +=, -=, *=, /=, %=, &=, ^=, |=, <<=, >>=, >>>=
+// 
 package ch04;
 
 public class Test18 {
@@ -9,7 +11,7 @@ public class Test18 {
     a = 5;
     a += 3;
     System.out.println(a);
-   }
+  }
 }
 
 

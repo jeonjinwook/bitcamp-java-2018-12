@@ -38,26 +38,4 @@ public class ArrayList<E> {
 
     list[size++] = abj;
   }
-  
-  @SuppressWarnings("unchecked")
-  public E get(int index) {
-    return (E) list[index] ;
-  }
-  
-  public E set(int index, E valuse) {
-    // value : 해당 위치에 있는 값을 대체할 값
-    // 리턴 값 : 대체되기 전의 값
-    return null;
-    
-  }
-  
-  public E remover(int index) {
-    // index : 삭제할 배열의 항목 위치
-    // 리턴 값 : 삭제된 이전 값
-    // 힌트 : System.Arraycopy() 참
-    return null;
-  }
-  public int size() {
-    return size;
-  }
 }

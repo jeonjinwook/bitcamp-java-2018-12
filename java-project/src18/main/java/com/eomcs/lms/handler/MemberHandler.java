@@ -12,23 +12,6 @@ public class MemberHandler {
     this.keyboard = keyboard;
     this.list = new ArrayList<>();
   }
-  public void detailMember() {
-    System.out.println("번호? ");
-    int no = Integer.parseInt(keyboard.nextLine());
-    int index = indexOfMember(no);
-    if (index == -1) {
-      System.out.println("해당 게시글을 찾을 수 없습니다.");
-      return;
-  }
-    Member member = list.get(index);
-    System.out.printf("%s\n", member.getName());
-    System.out.printf("%s \n", member.getEmail());
-    System.out.printf("%s \n", member.getPassword());
-    System.out.printf("%s \n", member.getPhoto());
-    System.out.printf("%s \n", member.getTel());
-    System.out.printf("%s \n", member.getRegisteredDate());
-    
-  }
   
   public void listMember() {
     Member[] members = list.toArray(new Member[0]);
@@ -63,13 +46,5 @@ public class MemberHandler {
 
     list.add(member);
     System.out.println("저장하였습니다.");
-  }
-  private int indexOfMember(int no) {
-    for (int i = 0 ; i < list.size ; i ++ ) {
-      Member m = list.get(i);
-      if (m.getNo() == no)
-      return i;
-    }
-    return -1;
   }
 }

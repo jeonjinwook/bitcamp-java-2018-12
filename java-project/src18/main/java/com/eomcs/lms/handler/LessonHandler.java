@@ -12,22 +12,6 @@ public class LessonHandler {
     this.keyboard = keyboard;
     this.list = new ArrayList<>();
   }
-  public void detailLesson() {
-    System.out.println("번호? ");
-    int no = Integer.parseInt(keyboard.nextLine());
-    int index = indexOfLesson(no);
-    if (index == -1) {
-      System.out.println("해당 게시글을 찾을 수 없습니다.");
-      return;
-    }
-    Lesson lesson = list.get(index);
-    System.out.printf("%d\n", lesson.getNo());
-    System.out.printf("%s\n", lesson.getTitle());
-    System.out.printf("%s\n", lesson.getContents());
-    System.out.printf("%s ~ %s\n", lesson.getStartDate(), lesson.getEndDate());
-    System.out.printf("%d\n", lesson.getTotalHours());
-    System.out.printf("%d\n", lesson.getDayHours());
-  }
   
   public void listLesson() {
     Lesson[] lessons = list.toArray(new Lesson[0]);
@@ -63,14 +47,5 @@ public class LessonHandler {
 
     list.add(lesson);
     System.out.println("저장하였습니다.");
-  }
-  private int indexOfLesson(int no) {
-    for (int i = 0 ; i < list.size ; i ++) {
-      Lesson l = list.get(i);
-      if (l.getNo() == no) {
-        return i;
-      }
-    }
-    return -1;
   }
 }

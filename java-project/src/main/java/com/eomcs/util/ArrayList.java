@@ -1,4 +1,4 @@
-package com.eomcs.lms.handler;
+package com.eomcs.util;
 
 import java.util.Arrays;
 
@@ -6,11 +6,11 @@ public class ArrayList<E> {
   static final int DEFAULT_CAPACITY = 10;
   Object[] list;
   int size = 0;
-  
+
   public ArrayList() {
-  list = new Object[DEFAULT_CAPACITY]; 
+    list = new Object[DEFAULT_CAPACITY]; 
   }
-  
+
   public ArrayList(int initialCapacity) {
     if (initialCapacity > DEFAULT_CAPACITY)
       list = new Object[initialCapacity];
@@ -26,7 +26,7 @@ public class ArrayList<E> {
       arr[i] = (E) list[i];
     }
     return arr;
-    */
+     */
   }
 
   public void add(E abj) {
@@ -38,26 +38,42 @@ public class ArrayList<E> {
 
     list[size++] = abj;
   }
-  
+
   @SuppressWarnings("unchecked")
   public E get(int index) {
-    return (E) list[index] ;
-  }
-  
-  public E set(int index, E valuse) {
-    // value : 해당 위치에 있는 값을 대체할 값
-    // 리턴 값 : 대체되기 전의 값
-    return null;
+    if (index < 0 || index > size)
+      return null;
     
+    return (E) list[index];
+  }
+
+  @SuppressWarnings("unchecked")
+  public E set(int index, E value) {
+    if (index < 0 || index >= size)
+      return null;
+    
+    E obj = (E) list[index];
+    
+    list[index] = value;
+    return obj;
+  }
+
+  @SuppressWarnings("unchecked")
+  public E remove(int index) {
+    if (index < 0 || index > size)
+      return null;
+    
+    E obj = (E) list[index];
+      
+      for(int i = index; i < size - 1; i++)
+      list[i] = list[i + 1];
+    
+    size--;
+    
+    return obj;
   }
   
-  public E remover(int index) {
-    // index : 삭제할 배열의 항목 위치
-    // 리턴 값 : 삭제된 이전 값
-    // 힌트 : System.Arraycopy() 참
-    return null;
-  }
   public int size() {
-    return size;
+    return this.size;
   }
 }

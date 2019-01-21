@@ -3,33 +3,17 @@ package com.eomcs.lms.handler;
 import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.domain.Member;
+import com.eomcs.util.ArrayList;
 public class MemberHandler {
-  
+
   Scanner keyboard;
   ArrayList<Member> list;
-  
+
   public MemberHandler(Scanner keyboard) {
     this.keyboard = keyboard;
     this.list = new ArrayList<>();
   }
-  public void detailMember() {
-    System.out.println("번호? ");
-    int no = Integer.parseInt(keyboard.nextLine());
-    int index = indexOfMember(no);
-    if (index == -1) {
-      System.out.println("해당 게시글을 찾을 수 없습니다.");
-      return;
-  }
-    Member member = list.get(index);
-    System.out.printf("%s\n", member.getName());
-    System.out.printf("%s \n", member.getEmail());
-    System.out.printf("%s \n", member.getPassword());
-    System.out.printf("%s \n", member.getPhoto());
-    System.out.printf("%s \n", member.getTel());
-    System.out.printf("%s \n", member.getRegisteredDate());
-    
-  }
-  
+
   public void listMember() {
     Member[] members = list.toArray(new Member[0]);
     for (Member member : members) {
@@ -64,12 +48,57 @@ public class MemberHandler {
     list.add(member);
     System.out.println("저장하였습니다.");
   }
-  private int indexOfMember(int no) {
-    for (int i = 0 ; i < list.size ; i ++ ) {
-      Member m = list.get(i);
-      if (m.getNo() == no)
-      return i;
+
+  public void detailMember() {
+    int no = kb();
+    int index = indexOf(no);
+    if (!validate(index))
+      return;
+
+    Member member = list.get(index);
+
+    if (member == null) {
+      System.out.println("해당 수업을 찾을수기없습니다.");
+      return;
+    }
+    System.out.printf("이름: %s \n", member.getName());
+    System.out.printf("이메일: %s \n", member.getEmail());
+    System.out.printf("암호: %s \n", member.getPassword());
+    System.out.printf("사진: %s \n", member.getPhoto());
+    System.out.printf("전화: %s \n", member.getTel());
+    System.out.printf("가입일: %s \n", member.getRegisteredDate());
+  }
+
+  private int indexOf(int no) {
+    for (int i = 0; i < list.size(); i++) {
+      Member item = list.get(i);
+      if (item.getNo() == no) {
+        return i;
+      }
     }
     return -1;
+  }
+  private int kb() {
+    System.out.print("번호? ");
+    return Integer.parseInt(keyboard.nextLine());
+  }
+  
+  private boolean validate(int index) {
+    if (index == -1) {
+      System.out.println("수업을 찾을수가 없습니다.");
+      return false;
+    }
+    return true;
+  }
+
+  public void deleteMember() {
+    int no = kb();
+    int index = indexOf(no);
+    
+    if(!validate(index)) {
+      return;
+    }
+    list.remove(index);
+    System.out.println("수업을 삭제 했습니다.");
   }
 }

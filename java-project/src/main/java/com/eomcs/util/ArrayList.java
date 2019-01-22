@@ -41,35 +41,31 @@ public class ArrayList<E> {
 
   @SuppressWarnings("unchecked")
   public E get(int index) {
-    if (index < 0 || index > size)
-      return null;
-    
-    return (E) list[index];
+   if (index < 0 || index >= size) {
+     return null;
+   }
+   return (E)list[index];
   }
 
   @SuppressWarnings("unchecked")
   public E set(int index, E value) {
-    if (index < 0 || index >= size)
-      return null;
-    
-    E obj = (E) list[index];
-    
-    list[index] = value;
-    return obj;
+   if (index < 0 || index >= size) {
+     return null;
+   }
+   E obj = (E)list[index];
+   return obj;
   }
 
   @SuppressWarnings("unchecked")
   public E remove(int index) {
-    if (index < 0 || index > size)
+    if (index < 0 || index >= size) {
       return null;
-    
-    E obj = (E) list[index];
-      
-      for(int i = index; i < size - 1; i++)
+    }
+    E obj = (E)list[index];
+    for (int i = index ; i < size -1 ; i ++) {
       list[i] = list[i + 1];
-    
-    size--;
-    
+    }
+    size --;
     return obj;
   }
   

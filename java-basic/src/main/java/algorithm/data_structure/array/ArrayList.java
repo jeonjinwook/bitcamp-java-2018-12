@@ -25,6 +25,20 @@ public class ArrayList {
     }
     return list;
   }
+  public Object get(int index) {
+    if (index < 0 || index >= size) 
+      return null;
+    return arr[index];
+  }
+  
+  public Object set(int index, Object value) {
+    if (index < 0 || index >= size) 
+      return null;
+    
+    Object old = this.arr[index];
+    this.arr[index] = value;
+    return old;
+  }
 
   public void add(Object value) {
     if (arr.length == size)
@@ -46,20 +60,6 @@ public class ArrayList {
     return 0;
   }
 
-  public Object get(int index) {
-    if (index < 0 || index >= size) 
-      return null;
-    return arr[index];
-  }
-
-  public Object set(int index, Object value) {
-    if (index < 0 || index >= size) 
-      return null;
-
-    Object old = this.arr[index];
-    this.arr[index] = value;
-    return old;
-  }
 
   public Object remove(int index) {
     if (index < 0 || index >= size) {

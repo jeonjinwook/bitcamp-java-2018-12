@@ -1,12 +1,20 @@
 package ch17.e;
 
+// 기존의 정렬 클래스처럼 동일한 방법으로 사용하려면
+// Sorter를 상속 받아 같은 타입으로 묶여야 한다.
+// 그래서 Sorter 를 상속 받았다.
+//
 public class MergeSort extends Sorter {
-  @Override
-    public void sort(int[] values) {
-      sort(values, 0, values.length - 1);
-    }
   
-//Merges two subarrays of arr[]. 
+  // Sorter에서 상속 받은 메서드가 추상 메서드이기 때문에 
+  // 이 서브 클래스는 반드시 구현해야 한다.
+  // 구현하지 않으면 이 클래스도 추상 클래스가 될 수 밖에 없다.
+  @Override
+  public void sort(int[] values) {
+    sort(values, 0, values.length - 1);
+  }
+  
+  //Merges two subarrays of arr[]. 
   // First subarray is arr[l..m] 
   // Second subarray is arr[m+1..r] 
   void merge(int arr[], int l, int m, int r) 
@@ -81,5 +89,5 @@ public class MergeSort extends Sorter {
           // Merge the sorted halves 
           merge(arr, l, m, r); 
       } 
-  }
+  } 
 }

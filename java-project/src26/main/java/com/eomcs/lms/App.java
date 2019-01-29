@@ -98,13 +98,9 @@ public class App {
         if (commandHandler == null)
           System.out.println("실행할 수 없는 명령입니다.");
         else 
-          try {
+          // 명령어를 처리할 객체를 찾았으면,
+          // Command 계약서에 나와 있는대로 호출한다.
           commandHandler.execute();
-          } catch (Exception e) {
-            // 예외가 발생하면 다음 문장을 실행한다.
-            // 그리고 계속 프로그램을 실행한다.
-            System.out.printf("작업 중 오류 발생: %s\n", e.toString());
-          }
       }
       
       System.out.println(); // 결과 출력 후 빈 줄 출력

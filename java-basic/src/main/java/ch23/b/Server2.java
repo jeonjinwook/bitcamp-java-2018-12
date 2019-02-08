@@ -1,7 +1,6 @@
 // 데이터 주고 받기 - 에코(echo) 서버 만들기
 package ch23.b;
 
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;

@@ -1,34 +1,62 @@
-// 스레드와 생명주기
+// 스레드의 생명주기
 package ch24.c;
-
-import java.util.Scanner;
 
 public class Test03 {
 
-  static class MyThread extends Thread {
-    @Override
-    public void run() {
-      Scanner keyboard = new Scanner(System.in);
-      System.out.printf("입력하시오> ");
-      String input = keyboard.nextLine();
-      System.out.println("입력한 문자열 => " + input);
-      keyboard.close();
-    }
-  }
-
-  public static void main(String[] args) {
-
-    // main 스레드에서 스레드 객체 생성하기
-    // => 어떤 스레드에서 생성한 스레드를 그 스레드의 자식 스레드라 부른다.
-    // => 즉 다음 스레드는 main 스레드의 자식 스레드이다.
-    // => 자식 스레드는 부모 스레드와 같은 우선 순위를 갖는다.
-    MyThread t = new MyThread(); // 우선순위 5
-    t.start();
+  
+  @SuppressWarnings("static-access")
+  public static void main(String[] args) throws Exception {
+    // 스레드의 생명주기
+    // new Thread()    start()              sleep()/wait()
+    //     준비 -------------------> Running ---------------> Not Runnable
+    //                               ^  |    <---------------
+    //                               |  |    timeout/notify()
+    //                               X  |
+    //                               |  |  run() 메서드 종료
+    //                               |  V
+    //                               Dead
+    // Running 상태?
+    // - CPU를 받아서 실행 중이거나 CPU를 받을 수 있는 상태
+    //
+    // Not Runnable 상태?
+    // - CPU를 받지 않는 상태
+    // 
+    // run() 메서드 종료 후 다시 running 상태로 돌아갈 수 없다. 
+    // => 새로 스레드를 만들어 실행하는 방법 밖에 없다!
+    Thread t = new Thread() {
+      @Override
+      public void run() {
+        for (int i = 0; i < 1000; i++) {
+          System.out.printf("스레드 ===> %d\n", i);
+        }
+      }
+    }; // 스레드 객체 생성 => 준비 상태
+    t.start(); // => Running 상태
     
-    // 모든 스레드가 완료할 때까지 JVM은 종료되지 않는다.
-
-    System.out.println("프로그램 종료?");
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        for (int i = 0; i < 1000; i++) {
+          System.out.printf("스레드2 >>>>>>>>>>>>>>>> %d\n", i);
+        }
+      }
+    }).start(); // 스레드 객체 생성 => 준비 상태 => Running 상태 
+    
+    // main 스레드를 5초 동안 Not Runnable 상태에 둔다.
+    // 즉 main 스레드를 실행하지 않는다.
+    Thread.currentThread().sleep(5000);
+    
+    // 주의!
+    // => dead 상태에서 다시 실행할 수 없다.
+    //t.start(); // 예외 발생!
+    
+    for (int i = 0; i < 1000; i++) {
+      System.out.printf("main() ~~~~> %d\n", i);
+    }
+    // main() 메서드의 코드를 모두 실행했다고 해서 JVM이 종료되는 것은 아니다.
+    // 다른 스레드의 실행 모두 끝나야만 JVM이 종료된다.
   }
+
 }
 
 

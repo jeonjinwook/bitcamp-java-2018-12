@@ -56,7 +56,6 @@ public class LessonUpdateCommand implements Command {
       System.out.println("수업을 변경했습니다.");
 
     } catch (Exception e) {
-      e.printStackTrace();
       System.out.println("변경 중 오류 발생!");
     }
   }

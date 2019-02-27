@@ -298,7 +298,6 @@ ALTER TABLE Temporary6
 -- 예정중인프로젝트
 CREATE TABLE Temporary7 (
   id   INTEGER  NOT NULL COMMENT '프로젝트예정번호', -- 프로젝트예정번호
-  COL  INTEGER  NOT NULL COMMENT '자료번호', -- 자료번호
   COL2 DATETIME NOT NULL COMMENT '시작일시' -- 시작일시
 )
 COMMENT '예정중인프로젝트';
@@ -451,14 +450,4 @@ ALTER TABLE Temporary6
     )
     REFERENCES Temporary4 ( -- 진행중인프로젝트
       id -- 진행중인프로젝트 번호
-    );
-
--- 예정중인프로젝트
-ALTER TABLE Temporary7
-  ADD CONSTRAINT FK_TABLE4_TO_Temporary7 -- 자료 -> 예정중인프로젝트
-    FOREIGN KEY (
-      COL -- 자료번호
-    )
-    REFERENCES TABLE4 ( -- 자료
-      COL -- 자료번호
     );

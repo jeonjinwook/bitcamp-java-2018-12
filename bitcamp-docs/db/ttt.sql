@@ -4,17 +4,8 @@ DROP TABLE IF EXISTS TABLE RESTRICT;
 -- 사용자
 DROP TABLE IF EXISTS Temporary RESTRICT;
 
--- 프로젝트
-DROP TABLE IF EXISTS Temporary2 RESTRICT;
-
--- 참여중인프로젝트
-DROP TABLE IF EXISTS Temporary3 RESTRICT;
-
 -- 진행중인프로젝트
 DROP TABLE IF EXISTS Temporary4 RESTRICT;
-
--- 사용자프로젝트목록
-DROP TABLE IF EXISTS TABLE2 RESTRICT;
 
 -- 주소
 DROP TABLE IF EXISTS TABLE3 RESTRICT;
@@ -94,32 +85,6 @@ CREATE INDEX IX_Temporary
 ALTER TABLE Temporary
   MODIFY COLUMN id INTEGER NOT NULL AUTO_INCREMENT COMMENT '사용자번호';
 
--- 프로젝트
-CREATE TABLE Temporary2 (
-  id <데이터 타입 없음> NOT NULL COMMENT '프로젝트번호' -- 프로젝트번호
-)
-COMMENT '프로젝트';
-
--- 프로젝트
-ALTER TABLE Temporary2
-  ADD CONSTRAINT PK_Temporary2 -- 프로젝트 기본키
-    PRIMARY KEY (
-      id -- 프로젝트번호
-    );
-
--- 참여중인프로젝트
-CREATE TABLE Temporary3 (
-  id <데이터 타입 없음> NOT NULL COMMENT '참여중인프로젝트번호' -- 참여중인프로젝트번호
-)
-COMMENT '참여중인프로젝트';
-
--- 참여중인프로젝트
-ALTER TABLE Temporary3
-  ADD CONSTRAINT PK_Temporary3 -- 참여중인프로젝트 기본키
-    PRIMARY KEY (
-      id -- 참여중인프로젝트번호
-    );
-
 -- 진행중인프로젝트
 CREATE TABLE Temporary4 (
   id   INTEGER     NOT NULL COMMENT '진행중인프로젝트 번호', -- 진행중인프로젝트 번호
@@ -153,20 +118,6 @@ CREATE INDEX IX_Temporary4
 
 ALTER TABLE Temporary4
   MODIFY COLUMN id INTEGER NOT NULL AUTO_INCREMENT COMMENT '진행중인프로젝트 번호';
-
--- 사용자프로젝트목록
-CREATE TABLE TABLE2 (
-  id  <데이터 타입 없음> NOT NULL COMMENT '포로젝트목록번호', -- 포로젝트목록번호
-  id2 INTEGER            NULL     COMMENT '진행중인프로젝트 번호' -- 진행중인프로젝트 번호
-)
-COMMENT '사용자프로젝트목록';
-
--- 사용자프로젝트목록
-ALTER TABLE TABLE2
-  ADD CONSTRAINT PK_TABLE2 -- 사용자프로젝트목록 기본키
-    PRIMARY KEY (
-      id -- 포로젝트목록번호
-    );
 
 -- 주소
 CREATE TABLE TABLE3 (
@@ -298,6 +249,7 @@ ALTER TABLE Temporary6
 -- 예정중인프로젝트
 CREATE TABLE Temporary7 (
   id   INTEGER  NOT NULL COMMENT '프로젝트예정번호', -- 프로젝트예정번호
+  COL  INTEGER  NULL     COMMENT '자료번호', -- 자료번호
   COL2 DATETIME NOT NULL COMMENT '시작일시' -- 시작일시
 )
 COMMENT '예정중인프로젝트';
@@ -372,16 +324,6 @@ ALTER TABLE Temporary4
       COL2 -- 프로젝트그룹번호
     );
 
--- 사용자프로젝트목록
-ALTER TABLE TABLE2
-  ADD CONSTRAINT FK_Temporary4_TO_TABLE2 -- 진행중인프로젝트 -> 사용자프로젝트목록
-    FOREIGN KEY (
-      id2 -- 진행중인프로젝트 번호
-    )
-    REFERENCES Temporary4 ( -- 진행중인프로젝트
-      id -- 진행중인프로젝트 번호
-    );
-
 -- 프로젝트그룹
 ALTER TABLE Temporary5
   ADD CONSTRAINT FK_stud_TO_Temporary5 -- 연구원 -> 프로젝트그룹
@@ -450,4 +392,14 @@ ALTER TABLE Temporary6
     )
     REFERENCES Temporary4 ( -- 진행중인프로젝트
       id -- 진행중인프로젝트 번호
+    );
+
+-- 예정중인프로젝트
+ALTER TABLE Temporary7
+  ADD CONSTRAINT FK_TABLE4_TO_Temporary7 -- 자료 -> 예정중인프로젝트
+    FOREIGN KEY (
+      COL -- 자료번호
+    )
+    REFERENCES TABLE4 ( -- 자료
+      COL -- 자료번호
     );

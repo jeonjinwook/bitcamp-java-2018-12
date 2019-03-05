@@ -10,13 +10,16 @@ import java.io.PrintWriter;
 public abstract class AbstractCommand implements Command {
   @Override
   public void execute(BufferedReader in, PrintWriter out) {
+    // 클라이언트 요청을 처리한 후 커넥션을 자동으로 닫도록
+    // try-with-resources 블록에 connection 레퍼런스를 선언한다.
+    //
     try {
-    execute(new Response(in, out));
+      execute(new Response(in, out));
     } catch (Exception e) {
-      out.printf("실행 오류! : %s\n", e.getMessage());
+      throw new RuntimeException(e);
     }
   }
-  
+
   public void execute(Response response) throws Exception {
     // 서브 클래스에서 오버라디이 해야할 메서드이다.
     // 그러나 서브 클래스가 반드시 오버라이딩 하도록 강요하지 않기 위해 추상 메서드로 선언하지 않는다.

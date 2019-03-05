@@ -10,6 +10,9 @@ drop table if exists lms_board;
 -- 사진 게시판 테이블 삭제
 drop table if exists lms_photo;
 
+-- 사진 게시물 첨부 파일 테이블 삭제
+drop table if exists lms_photo_file;
+
 -- 수업 테이블 생성
 create table lms_lesson (
   lesson_id int not null auto_increment primary key comment '수업 데이터 식별 번호',  
@@ -40,7 +43,7 @@ create table lms_board (
   vw_cnt int default 0 comment '조회수'
 ) comment '게시물';
 
--- 사진 게시물 데티터 생성
+-- 사진 게시물 데이블 생성
 create table lms_photo (
   photo_id int not null auto_increment primary key comment '사진 게시물 식별 번호',
   lesson_id int not null comment '수업 번호',

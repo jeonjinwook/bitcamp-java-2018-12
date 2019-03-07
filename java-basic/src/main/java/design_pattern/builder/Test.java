@@ -7,6 +7,7 @@ public class Test {
 
   public static void main(String[] args) {
     CarBuilder carBuilder = new CarBuilder();
+    
     Car c1 = carBuilder.build("비트자동차 모델1");
     System.out.println(c1);
     System.out.println("---------------------");
@@ -18,6 +19,7 @@ public class Test {
     Car c3 = carBuilder.build("비트자동차 모델3");
     System.out.println(c3);
     System.out.println("---------------------");
+
   }
 
 }

@@ -25,16 +25,16 @@ import com.eomcs.lms.handler.MemberDetailCommand;
 import com.eomcs.lms.handler.MemberListCommand;
 import com.eomcs.lms.handler.MemberUpdateCommand;
 
-// App 객체의 상태가 변경될 때 마다 보고 받는 옵저버가 되려면
+// App 객체의 상태가 변경될 때 마다 보고 받는 옵저버가 되려면 
 // ApplicationContextListener 규격에 따라 작성해야 한다.
-public class ApplicationInitializer implements ApplicationContextListener{
+public class ApplicationInitializer implements ApplicationContextListener {
 
   Connection con;
   
   @Override
   public void contextInitialized(Map<String, Object> context) {
     try {
-   // DAO가 사용할 커넥션 객체를 여기서 준비한다.
+      // DAO가 사용할 커넥션 객체를 여기서 준비한다.
       con = DriverManager.getConnection(
           "jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111");
       
@@ -58,7 +58,6 @@ public class ApplicationInitializer implements ApplicationContextListener{
       context.put("/member/detail", new MemberDetailCommand(keyboard, memberDao));
       context.put("/member/update", new MemberUpdateCommand(keyboard, memberDao));
       context.put("/member/delete", new MemberDeleteCommand(keyboard, memberDao));
-
       
       context.put("/board/add", new BoardAddCommand(keyboard, boardDao));
       context.put("/board/list", new BoardListCommand(keyboard, boardDao));
@@ -69,18 +68,21 @@ public class ApplicationInitializer implements ApplicationContextListener{
     } catch (Exception e) {
       throw new ApplicationContextException(e);
     }
-    
   }
 
   @Override
   public void contextDestroyed(Map<String, Object> context) {
     try {
-      // 애플리케이션이 종료될 때 DBMS와의 연결의 끊는다.
+      // 애플리케이션이 종료될 때 DBMS와의 연결을 끊는다.
       con.close();
     } catch (Exception e) {
       throw new ApplicationContextException(e);
-    }
-    
+    }   
   }
-
 }
+
+
+
+
+
+

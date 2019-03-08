@@ -8,16 +8,16 @@ public class BoardDetailCommand implements Command {
   Scanner keyboard;
   BoardDao boardDao;
   
-  public BoardDetailCommand(Scanner keyboard, BoardDao boardAgent) {
+  public BoardDetailCommand(Scanner keyboard, BoardDao boardDao) {
     this.keyboard = keyboard;
-    this.boardDao = boardAgent;
+    this.boardDao = boardDao;
   }
 
   @Override
   public void execute() {
     System.out.print("번호? ");
     int no = Integer.parseInt(keyboard.nextLine());
-
+    
     try {
       Board board = boardDao.findByNo(no);
       if (board == null) {
@@ -27,9 +27,9 @@ public class BoardDetailCommand implements Command {
       System.out.printf("내용: %s\n", board.getContents());
       System.out.printf("작성일: %s\n", board.getCreatedDate());
       System.out.printf("조회수: %d\n", board.getViewCount());
-      
+
     } catch (Exception e) {
-      System.out.printf("게시글 상세 정보 출력 오류! : %s\n", e.getMessage());
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
   }
 }

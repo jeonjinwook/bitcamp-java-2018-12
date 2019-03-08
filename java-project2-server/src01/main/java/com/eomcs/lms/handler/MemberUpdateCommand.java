@@ -8,9 +8,9 @@ public class MemberUpdateCommand implements Command {
   Scanner keyboard;
   MemberDao memberDao;
   
-  public MemberUpdateCommand(Scanner keyboard, MemberDao memberAgent) {
+  public MemberUpdateCommand(Scanner keyboard, MemberDao memberDao) {
     this.keyboard = keyboard;
-    this.memberDao = memberAgent;
+    this.memberDao = memberDao;
   }
   
   @Override
@@ -20,8 +20,11 @@ public class MemberUpdateCommand implements Command {
 
     try {
       Member member = memberDao.findByNo(no);
-    
-      // 기존 값 복제
+      if (member == null) {
+        System.out.println("해당 번호의 회원이 없습니다.");
+        return;
+      }
+      
       Member temp = member.clone();
       
       System.out.printf("이름(%s)? ", member.getName());
@@ -46,11 +49,10 @@ public class MemberUpdateCommand implements Command {
         temp.setTel(input);
       
       memberDao.update(temp);
-      
-      System.out.println("회원을 변경했습니다.");
+      System.out.println("변경했습니다.");
       
     } catch (Exception e) {
-      System.out.println("변경 중 오류 발생!");
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
   }
 }

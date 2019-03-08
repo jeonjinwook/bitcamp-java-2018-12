@@ -9,8 +9,9 @@ import java.util.List;
 import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
 
-public class BoardDaoImpl implements BoardDao{
+public class BoardDaoImpl implements BoardDao {
 
+  // 외부에서 커넥션 객체를 주입 받는다.
   Connection con;
 
   public BoardDaoImpl(Connection con) {
@@ -18,14 +19,13 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public List<Board> findAll() {
-
     try (PreparedStatement stmt = con.prepareStatement(
-        "select board_id, conts, cdt, vw_cnt from lms_board")){
+        "select board_id, conts, cdt, vw_cnt from lms_board"
+            + " order by board_id desc")) {
 
       try (ResultSet rs = stmt.executeQuery()) {
 
         ArrayList<Board> list = new ArrayList<>();
-        System.out.println("번호, 제목, 등록일, 조회수");
         while (rs.next()) {
           Board board = new Board();
           board.setNo(rs.getInt("board_id"));
@@ -43,31 +43,27 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public void insert(Board board) {
-
     try (PreparedStatement stmt = con.prepareStatement(
         "insert into lms_board(conts) values(?)")) {
 
       stmt.setString(1, board.getContents());
-
       stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-
   }
 
   public Board findByNo(int no) {
     try {
-      // 조회수 증가
+      // 조회수 증가시키기
       try (PreparedStatement stmt = con.prepareStatement(
-          "update lms_board set vw_cnt = vw_cnt + 1 where board_id = ?")){
+          "update lms_board set vw_cnt = vw_cnt + 1 where board_id = ?")) {
         stmt.setInt(1, no);
         stmt.executeUpdate();
       }
 
-      try (PreparedStatement stmt = con.prepareStatement(""
-          + "select board_id, conts, cdt, vw_cnt from lms_board where board_id = ?")) {
+      try (PreparedStatement stmt = con.prepareStatement(
+          "select board_id, conts, cdt, vw_cnt from lms_board where board_id = ?")) {
 
         stmt.setInt(1, no);
 
@@ -79,9 +75,7 @@ public class BoardDaoImpl implements BoardDao{
             board.setContents(rs.getString("conts"));
             board.setCreatedDate(rs.getDate("cdt"));
             board.setViewCount(rs.getInt("vw_cnt"));
-
             return board;
-
           } else {
             return null;
           }
@@ -93,7 +87,6 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public int update(Board board) {
-
     try (PreparedStatement stmt = con.prepareStatement(
         "update lms_board set conts = ? where board_id = ?")) {
 
@@ -101,43 +94,23 @@ public class BoardDaoImpl implements BoardDao{
       stmt.setInt(2, board.getNo());
 
       return stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
   public int delete(int no) {
-
     try (PreparedStatement stmt = con.prepareStatement(
         "delete from lms_board where board_id = ?")) {
-
-
 
       stmt.setInt(1, no);
 
       return stmt.executeUpdate();
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

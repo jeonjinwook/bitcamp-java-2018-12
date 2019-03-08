@@ -5,18 +5,17 @@ import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 public class MemberListCommand implements Command {
-
+  
   Scanner keyboard;
   MemberDao memberDao;
-
-  public MemberListCommand(Scanner keyboard, MemberDao memberAgent) {
+  
+  public MemberListCommand(Scanner keyboard, MemberDao memberDao) {
     this.keyboard = keyboard;
-    this.memberDao = memberAgent;
+    this.memberDao = memberDao;
   }
-
+  
   @Override
   public void execute() {
-
     try {
       List<Member> members = memberDao.findAll();
       for (Member member : members) {
@@ -25,7 +24,7 @@ public class MemberListCommand implements Command {
             member.getEmail(), member.getTel(), member.getRegisteredDate());
       }
     } catch (Exception e) {
-      System.out.printf("게시글 목록 출력 오류! : %s\n", e.getMessage());
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
   }
 }

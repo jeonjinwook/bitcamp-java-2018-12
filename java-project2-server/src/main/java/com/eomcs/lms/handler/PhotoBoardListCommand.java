@@ -12,17 +12,18 @@ public class PhotoBoardListCommand extends AbstractCommand {
   }
 
   @Override
-  public void execute(Response response) throws Exception {
-      List<PhotoBoard> boards = photoBoardDao.findAll();
-
-      for (PhotoBoard board : boards) {
-        response.println(
-            String.format("%3d, %-20s, %s, %d, %d", 
-            board.getNo(),
+  public void execute(Response response) {
+    List<PhotoBoard> boards = photoBoardDao.findAll(null);
+    
+    for (PhotoBoard board : boards) {
+      response.println(
+          String.format("%3d, %-20s, %s, %d, %d", 
+            board.getNo(), 
             board.getTitle(), 
-            board.getCreatedDate(),
+            board.getCreatedDate(), 
             board.getViewCount(),
             board.getLessonNo()));
-      }
+    }
   }
+
 }

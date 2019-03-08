@@ -1,5 +1,4 @@
 package com.eomcs.lms.handler;
-import java.sql.Date;
 import java.util.Scanner;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
@@ -9,9 +8,9 @@ public class MemberAddCommand implements Command {
   Scanner keyboard;
   MemberDao memberDao;
   
-  public MemberAddCommand(Scanner keyboard, MemberDao memberAgent) {
+  public MemberAddCommand(Scanner keyboard, MemberDao memberDao) {
     this.keyboard = keyboard;
-    this.memberDao = memberAgent;
+    this.memberDao = memberDao;
   }
   
   @Override
@@ -33,15 +32,12 @@ public class MemberAddCommand implements Command {
     System.out.print("전화? ");
     member.setTel(keyboard.nextLine());
   
-    member.setRegisteredDate(new Date(System.currentTimeMillis())); 
-    
     try {
       memberDao.insert(member);
-      
       System.out.println("저장하였습니다.");
       
-      } catch (Exception e) {
-        System.out.printf("게시글 저장 오류! : %s\n", e.getMessage());
-      }
+    } catch (Exception e) {
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
+    }
   }
 }

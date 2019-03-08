@@ -3,13 +3,13 @@ import java.util.Scanner;
 import com.eomcs.lms.dao.BoardDao;
 
 public class BoardDeleteCommand implements Command {
-
+  
   Scanner keyboard;
   BoardDao boardDao;
   
-  public BoardDeleteCommand(Scanner keyboard, BoardDao boardAgent) {
+  public BoardDeleteCommand(Scanner keyboard, BoardDao boardDao) {
     this.keyboard = keyboard;
-    this.boardDao = boardAgent;
+    this.boardDao = boardDao;
   }
 
   @Override
@@ -23,9 +23,9 @@ public class BoardDeleteCommand implements Command {
         return;
       }
       System.out.println("삭제했습니다.");
-
+      
     } catch (Exception e) {
-      System.out.printf("게시글 삭제 오류! : %s\n", e.getMessage());
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
   }
 }

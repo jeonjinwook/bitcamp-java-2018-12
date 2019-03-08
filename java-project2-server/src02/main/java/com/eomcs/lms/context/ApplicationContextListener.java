@@ -5,8 +5,8 @@ import java.util.Map;
 
 public interface ApplicationContextListener {
   // 애플리케이션이 시작될 때 호출된다.
-  void contextInitialized(Map<String, Object> context) throws ApplicationContextException;
+  void contextInitialized(Map<String,Object> context) throws ApplicationContextException;
   
-  // 애플리케이션이 종료 될 때 호출된다.
-  void contextDestroyed(Map<String, Object> context) throws ApplicationContextException;
+  // 애플리케이션이 종료될 때 호출된다.
+  void contextDestroyed(Map<String,Object> context) throws ApplicationContextException;
 }

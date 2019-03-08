@@ -5,15 +5,18 @@ public class MemberDeleteCommand extends AbstractCommand {
 
   MemberDao memberDao;
 
-  public MemberDeleteCommand(MemberDao memberAgent) {
-    this.memberDao = memberAgent;
+  public MemberDeleteCommand(MemberDao memberDao) {
+    this.memberDao = memberDao;
   }
 
   @Override
   public void execute(Response response) throws Exception {
-      int no = Integer.parseInt(response.requestString("번호?"));
+    int no = response.requestInt("번호?");
 
-      memberDao.delete(no);
-      response.println("삭제 성공");
+    if (memberDao.delete(no) == 0) {
+      response.println("해당 번호의 회원이 없습니다.");
+      return;
+    }
+    response.println("삭제했습니다.");
   }
 }

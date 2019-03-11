@@ -11,17 +11,29 @@
 		<result column="cdt" property="createdDate" />
 		<result column="vw_cnt" property="viewCount" />
 	</resultMap>
+	
+	<sql id="select1">
+	select
+    board_id,
+    conts,
+    cdt,
+    vw_cnt
+    from
+    lms_board
+	</sql>
 
 	<select id="findAll" resultMap="boardMap">
-		select
-		board_id,
-		conts,
-		cdt,
-		vw_cnt
-		from
-		lms_board
+		<include refid="select1"/>
+		order by
+		board_id desc
 	</select>
 
+	<select id="findByNo" resultMap="boardMap" parameterType="int">
+		<include refid="select1"/>
+		where
+		board_id = #{no}
+	</select>
+	
 	<update id="view" parameterType="int">
 		update
 		lms_board
@@ -30,18 +42,6 @@
 		where
 		board_id = #{no}
 	</update>
-
-	<select id="findByNo" resultMap="boardMap" parameterType="int">
-		select
-		board_id,
-		conts,
-		cdt,
-		vw_cnt
-		from
-		lms_board
-		where
-		board_id = #{no}
-	</select>
 
 	<insert id="insert" parameterType="board">
 		insert into

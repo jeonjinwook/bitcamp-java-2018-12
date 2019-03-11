@@ -14,29 +14,44 @@
 		<result column="tel" property="tel" />
 		<result column="photo" property="photo" />
 	</resultMap>
+	
+	<sql id="default-columns">
+	member_id,
+     name,
+      email,
+    cdt,
+     tel
+	</sql>
 
 	<select id="findAll" resultMap="memberMap">
-		select member_id, name, email,
-		cdt, tel
+		select 
+		<include refid="default-columns"/>
 		from lms_member
 		order by
 		member_id desc
 	</select>
 
-	<select id="findByKeyboard" resultMap="memberMap"
-		parameterType="string">
+	<select id="findByNo" resultMap="memberMap" parameterType="int">
 		select
-		member_id,
-		name,
-		email,
-		cdt,
-		tel
+		<include refid="default-columns"/>,
+		photo
 		from
 		lms_member
 		where
-		name like concat('%', #{value}, '%')
-		or email like concat('%', #{value} , '%')
-		or tel like concat('%', #{value} , '%')
+		member_id
+		= #{no}
+	</select>
+	
+	<select id="findByKeyboard" resultMap="memberMap" parameterType="string">
+		<bind name="pattern1" value="'%' + _parameter + '%'"/>
+		select
+		<include refid="default-columns"/>
+		from
+		lms_member
+		where
+		name like #{pattern1}
+		or email like #{pattern1}
+		or tel like #{pattern1}
 		order by name asc
 	</select>
 
@@ -55,19 +70,6 @@
 		#{photo})
 	</insert>
 
-	<select id="findByNo" resultMap="memberMap" parameterType="int">
-		select member_id,
-		name,
-		email,
-		photo,
-		tel,
-		cdt
-		from
-		lms_member
-		where
-		member_id
-		= #{no}
-	</select>
 
 	<update id="update" parameterType="member">
 		update lms_member

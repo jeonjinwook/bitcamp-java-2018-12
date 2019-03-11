@@ -29,7 +29,6 @@ public class MemberDaoImpl implements MemberDao{
   public void insert(Member member) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()){
       sqlSession.insert("MemberMapper.insert", member);
-      sqlSession.commit();
     }
   }
 
@@ -41,17 +40,13 @@ public class MemberDaoImpl implements MemberDao{
 
   public int update(Member member) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-      int count = sqlSession.update("MemberMapper.update", member);
-      sqlSession.commit();
-      return count;
+      return sqlSession.update("MemberMapper.update", member);
     }
   }
 
   public int delete(int no) {
     try (SqlSession sqlSession = sqlSessionFactory.openSession()){
-      int count = sqlSession.delete("MemberMapper.delete", no);
-      sqlSession.commit();
-      return count;
+      return sqlSession.delete("MemberMapper.delete", no);
     }
   }
 }

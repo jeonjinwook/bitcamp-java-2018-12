@@ -27,7 +27,7 @@ public class MyAutowiredAnnotationPostProcessor implements BeanPostProcessor {
   // 객체에 대한 모든 초기화가 끝난 후에 @Autowired 애노테이션을 처리하자!
   // 따라서 다음메서드만 오버라이딩 한다.
   @Override
-  public Object postProcessBeforeInitialization(Object bean, String beanName)
+  public Object postProcessBeforeInitialization(Object bean, String beanName) // bean -> Car의 값 beanName -> c1
       throws BeansException {
     // 생성된 객체를 기록한다.
     //  => 나중에 의존 객체를 주입할 때 사용할 것이다.
@@ -58,7 +58,7 @@ public class MyAutowiredAnnotationPostProcessor implements BeanPostProcessor {
           e.printStackTrace();
         }
       } else {
-        // 세터가 원하느 파라미 값이 없다면
+        // 세터가 원하느 파라미터 값이 없다면
         // 일단 그 값이 나타날 때 가지 호출을 연기하자!
         // 그 파라미터 타입의 값을 원하는 메서드 정보를 기록한다.
         addAutowiredMethod(paramType, new AutowiredMethod(bean, m));

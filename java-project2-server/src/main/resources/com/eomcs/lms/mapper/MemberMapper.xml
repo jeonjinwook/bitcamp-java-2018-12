@@ -25,7 +25,8 @@
   
   <select id="findAll" resultMap="memberMap">
     select 
-      <include refid="default-columns"/>
+      <include refid="default-columns"/>,
+      cdt
     from 
       lms_member
     order by 

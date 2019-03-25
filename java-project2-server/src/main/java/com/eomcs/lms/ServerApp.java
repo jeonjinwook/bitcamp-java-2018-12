@@ -17,7 +17,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import com.eomcs.lms.context.RequestMappingHandlerMapping;
 import com.eomcs.lms.context.RequestMappingHandlerMapping.RequestMappingHandler;
-import com.eomcs.lms.handler.Response;
+import com.eomcs.lms.handler.ServletRequest;
+import com.eomcs.lms.handler.ServletResponse;
 
 public class ServerApp {
 
@@ -29,7 +30,7 @@ public class ServerApp {
 
   // 보통 클래스에서 사용할 로그 출력 객체는 클래스의 스태틱 멤버로 선언한다.
   final static Logger logger = LogManager.getLogger(ServerApp.class);
-  
+
   public void service() {
 
     try (ServerSocket ss = new ServerSocket(8888)) {
@@ -38,7 +39,7 @@ public class ServerApp {
       // Spring IoC 컨테이너 준비
       iocContainer = new AnnotationConfigApplicationContext(AppConfig.class);
       printBeans();
-      
+
       // Spring IoC 컨테이너에서 RequestMappingHandlerMapping 객체를 꺼낸다.
       // 이 객체에 클라이언트 요청을 처리할 메서드 정보가 들어 있다.
       handlerMapping = 
@@ -84,18 +85,24 @@ public class ServerApp {
         // 클라이언트의 요청 읽기
         String requestLine = in.readLine();
         logger.debug(requestLine);
-        
+
         while (true) {
-        String str = in.readLine();
-        if (str.length() == 0) // 요청을 끝을 만나면 읽기를 멈춘다.
-          break;
+          String str = in.readLine();
+          if (str.length() == 0) // 요청을 끝을 만나면 읽기를 멈춘다.
+            break;
         }
-        
-        String commandPath = requestLine.split(" ")[1];
-        
+
+        // 예) GET /member/list HTTP/1.1
+        // 예) GET /member/detail?no=10 HTTP/1.1
+        // 예) GET /member/add?name=aaa&email=aaa&password=1111 HTTP/1.1
+        //  => requestURI[0] : /board/detail
+        //  => requestURI[1] : no=1
+        String[] requestURI = requestLine.split(" ")[1].split("\\?");
+        String commandPath = requestURI[0];
+
         // 클라이언트에게 응답하기
         //  => HTTP 프로토콜에 따라 응답 헤더를 출력한다.
-        // => 클라이언트 요청을 처리할 메서드를 꺼낸다.
+        //  => 클라이언트 요청을 처리할 메서드를 꺼낸다.
         RequestMappingHandler requestHandler = handlerMapping.get(commandPath);
 
         if (requestHandler == null) {
@@ -109,6 +116,15 @@ public class ServerApp {
         }
 
         try {
+          // 요청을 처리할 메서드가 사용할 Request, Response 준비하기
+          ServletRequest request = new ServletRequest();
+          if (requestURI.length > 1) {
+            // 예) name=aaa&email=aaa@test.com&password=1111
+            request.setQueryString(requestURI[1]); 
+          }
+
+          ServletResponse response = new ServletResponse(in, out);
+
           // 클라이언트 요청을 처리할 메서드를 찾았다면 호출한다.
           out.println("HTTP/1.1 200 OK");
           out.println("Server: bitcamp");
@@ -116,12 +132,11 @@ public class ServerApp {
           out.println();
           requestHandler.method.invoke(
               requestHandler.bean, // 메서드를 호출할 때 사용할 인스턴스
-              new Response(in, out)); // 메서드 파라미터 값
+              request, response); // 메서드 파라미터 값
         } catch (Exception e) {
           out.printf("실행 오류! : %s\n", e.getMessage());
           e.printStackTrace();
         }
-
         out.flush();
 
       } catch (Exception e) {
@@ -130,7 +145,7 @@ public class ServerApp {
         PrintWriter out = new PrintWriter(strWriter);
         e.printStackTrace(out);
         logger.error(strWriter.toString());
-        
+
       }
       logger.info("클라이언트와 연결 종료.");
     }
@@ -146,7 +161,6 @@ public class ServerApp {
     }
     logger.debug("-----------------------------------------------------");
   }
-
 }
 
 

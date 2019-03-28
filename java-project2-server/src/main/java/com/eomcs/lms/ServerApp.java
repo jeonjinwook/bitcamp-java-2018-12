@@ -44,7 +44,7 @@
 //      - 이클립스에 서버 테스트 환경을 다룰 'Servers' 프로젝트가 추가된다.
 //         물론 기존에 있다면 테스트 환경을 위한 설정 파일을 담은 폴더만 추가된다.
 //      - 생성된 배치 폴더의 경로
-//          이클립스워크스페이스폴더/.metadate/.plugins/org.eclipse.wst.server.core/
+//         이클립스워크스페이스폴더/.metadate/.plugins/org.eclipse.wst.server.core/
 // 3) 웹 애플리케이션을 테스트 용으로 만든 배치 폴더에 배포한다.
 //      - gradle build를 실행할 필요가 없다.
 //      - Servers 뷰 선택

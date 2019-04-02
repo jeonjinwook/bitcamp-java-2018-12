@@ -2,6 +2,7 @@ package com.eomcs.lms.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -9,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import com.eomcs.lms.InitServlet;
+import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5)
+@MultipartConfig(maxFileSize = 1024 * 1024 * 20)
 @SuppressWarnings("serial")
 @WebServlet("/member/update")
 public class MemberUpdateServlet extends HttpServlet {
@@ -23,8 +24,11 @@ public class MemberUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     MemberService memberService = 
-        InitServlet.iocContainer.getBean(MemberService.class);
+        iocContainer.getBean(MemberService.class);
 
 
     Member member = new Member();
@@ -33,6 +37,11 @@ public class MemberUpdateServlet extends HttpServlet {
     member.setEmail(request.getParameter("email"));
     member.setPassword(request.getParameter("password"));
     member.setTel(request.getParameter("tel"));
+    
+    if (memberService.update(member) > 0) {
+      response.sendRedirect("list");
+      return;
+    }
 
     Part photo = request.getPart("photo");
     if (photo.getSize() > 0) {
@@ -41,6 +50,8 @@ public class MemberUpdateServlet extends HttpServlet {
       photo.write(uploadDir + "/" + filename);
       member.setPhoto(filename);
     }
+    
+    response.setHeader("Refresh", "2;url=list");
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -49,13 +60,7 @@ public class MemberUpdateServlet extends HttpServlet {
         + "<meta http-equiv='Refresh' content='1;url=list'>"
         + "</head>");
     out.println("<body><h1>회원 변경</h1>");
-
-    if (memberService.update(member) == 0) {
       out.println("<p>해당 번호의 회원이 없습니다.</p>");
-    } else { 
-      out.println("<p>변경했습니다.</p>");
-    }
-
     out.println("</body></html>");
   }
 

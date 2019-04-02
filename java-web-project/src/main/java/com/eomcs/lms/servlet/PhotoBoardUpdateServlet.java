@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import com.eomcs.lms.InitServlet;
+import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.PhotoBoardService;
@@ -33,8 +34,11 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = 
-        InitServlet.iocContainer.getBean(PhotoBoardService.class);
+        iocContainer.getBean(PhotoBoardService.class);
     PhotoBoard board = new PhotoBoard();
     board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setTitle(request.getParameter("title"));
@@ -57,6 +61,12 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
     }
     board.setFiles(files);
 
+    if (files.size() > 0) {
+      photoBoardService.update(board);
+      response.sendRedirect("list");
+      return;
+    }
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head>"
@@ -64,14 +74,7 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
         + "<meta http-equiv='Refresh' content='1;url=list'>"
         + "</head>");
     out.println("<body><h1>사진 변경</h1>");
-
-    if (files.size() == 0) {
-      out.println("<p>최소 한 개의 사진 파일을 등록해야 합니다.</p>");
-
-    } else {
-      photoBoardService.update(board);
-      out.println("<p>변경하였습니다.</p>");
-    }
+    out.println("<p>최소 한 개의 사진 파일을 등록해야 합니다.</p>");
     out.println("</body></html>");
   }
 

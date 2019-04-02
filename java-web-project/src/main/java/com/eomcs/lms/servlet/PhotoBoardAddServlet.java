@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import com.eomcs.lms.InitServlet;
+import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.domain.PhotoFile;
@@ -35,8 +36,11 @@ public class PhotoBoardAddServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     LessonService lessonService = 
-        InitServlet.iocContainer.getBean(LessonService.class);
+        iocContainer.getBean(LessonService.class);
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -101,8 +105,11 @@ public class PhotoBoardAddServlet extends HttpServlet {
       throws ServletException, IOException {
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = 
-        InitServlet.iocContainer.getBean(PhotoBoardService.class);
+        iocContainer.getBean(PhotoBoardService.class);
 
     PhotoBoard board = new PhotoBoard();
     board.setTitle(request.getParameter("title"));
@@ -140,7 +147,8 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     } else {
       photoBoardService.add(board);
-      out.println("<p>저장하였습니다.</p>");
+      response.sendRedirect("list");
+      return;
     }
     out.println("</body></html>");
   }

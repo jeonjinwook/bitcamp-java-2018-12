@@ -33,13 +33,17 @@ public class PhotoBoardDetailServlet extends HttpServlet {
     int no = Integer.parseInt(request.getParameter("no"));
 
     response.setContentType("text/html;charset=UTF-8");
-    
+
     PhotoBoard board = photoBoardService.get(no);
-    
+
     PrintWriter out = response.getWriter();
     out.println("<htm>");
     out.println("<head><title>사진 조회</title></head>");
     out.println("<body>");
+
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);;
+
     out.println("<h1>사진 조회</h1>");
 
     if (board == null) {
@@ -69,17 +73,17 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       out.println("<tr>");
       out.println("  <th>수업</th>");
       out.println("  <td><select name='lessonNo'>");
-      
+
       List<Lesson> lessons = lessonService.list();
       for (Lesson lesson : lessons) {
         out.printf("      <option value='%d' %s>%s(%s ~ %s)</option>\n", 
             lesson.getNo(),
             board.getLessonNo() == lesson.getNo() ? "selected" : "",
-            lesson.getTitle(), 
-            lesson.getStartDate(), 
-            lesson.getEndDate());
+                lesson.getTitle(), 
+                lesson.getStartDate(), 
+                lesson.getEndDate());
       }
-      
+
       out.println("  </select'></td>");
       out.println("</tr>");
       out.println("  <td colspan='2'>최소 한 개의 사진 파일을 등록해야 합니다.</td>");
@@ -118,6 +122,7 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       out.println("</table>");
 
       out.println("<p><a href='list'>목록</a>"
+          + "<a href='../'>전체 목록</a>"
           + " <a href='delete?no=" + board.getNo() + "'>삭제</a>"
           + " <button type='submit'>변경</button>"
           + "<p>");

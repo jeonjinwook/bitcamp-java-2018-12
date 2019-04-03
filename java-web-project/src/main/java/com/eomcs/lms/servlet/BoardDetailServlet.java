@@ -33,7 +33,12 @@ public class BoardDetailServlet extends HttpServlet{
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 조회</title></head>");
-    out.println("<body><h1>게시물 조회</h1>");
+    out.println("<body>");
+
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);;
+
+    out.println("<h1>게시물 조회</h1>");
 
     if (board == null) {
       out.println("<p>해당 번호의 게시물이 없습니다.</p>");
@@ -57,6 +62,7 @@ public class BoardDetailServlet extends HttpServlet{
 
     out.println("</table>");
     out.println("<p><a href='list'>목록</a>"
+        + "<a href='../'>전체 목록</a>"
         + " <a href='delete?no=" + board.getNo() + "'>삭제</a>"
         + " <button type='submit'>변경</button>"
         + "<p>");

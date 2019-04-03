@@ -38,17 +38,17 @@ public class MemberUpdateServlet extends HttpServlet {
     member.setPassword(request.getParameter("password"));
     member.setTel(request.getParameter("tel"));
     
-    if (memberService.update(member) > 0) {
-      response.sendRedirect("list");
-      return;
-    }
-
     Part photo = request.getPart("photo");
     if (photo.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
       String uploadDir = this.getServletContext().getRealPath("/upload/member/");
       photo.write(uploadDir + "/" + filename);
       member.setPhoto(filename);
+    }
+    
+    if (memberService.update(member) > 0) {
+      response.sendRedirect("list");
+      return;
     }
     
     response.setHeader("Refresh", "2;url=list");

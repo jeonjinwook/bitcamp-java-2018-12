@@ -18,7 +18,7 @@ import com.eomcs.lms.service.BoardService;
 public class BoardListServlet extends HttpServlet {
 
   @Override
-  protected void doGet(HttpServletRequest requset, HttpServletResponse response)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
@@ -33,8 +33,14 @@ public class BoardListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>게시물 목록</title></head>");
-    out.println("<body><h1>게시물 목록</h1>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);;
+    
+    out.println("<h1>게시물 목록</h1>");
     out.println("<p><a href='add'>새글</a></p>");
+    out.println("<p><a href='../'>시스템 목록</a></p>");
     out.println("<table border='1'>");
     out.println("<tr><th>번호</th> <th>제목</th> <th>등록일</th> <th>조회수</th>");
     for (Board board : boards) {

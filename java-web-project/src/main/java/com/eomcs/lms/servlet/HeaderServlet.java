@@ -24,11 +24,11 @@ public class HeaderServlet extends HttpServlet {
     
     PrintWriter out = response.getWriter();
     out.println("<header>");
-    out.println(" <img src='http://bitcamp.co.kr/img/logo.jpg' style='height:50px'>");
+    out.println(" <img src='http://bitcamp.co.kr/img/logo.jpg' style='height:125px'>");
     if (loginUser == null) {
       out.printf("<a href='%s/auth/login'>로그인</a>", contextRootPath);
     } else {
-      out.printf("<img src='%s/upload/member/%s' style='height:20px;'> %s", 
+      out.printf("<img src='%s/upload/member/%s' style='height:200px;'> %s", 
           contextRootPath, 
           loginUser.getPhoto(), 
           loginUser.getName());

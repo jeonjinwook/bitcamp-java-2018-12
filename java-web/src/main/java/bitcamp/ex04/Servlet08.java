@@ -15,9 +15,9 @@ import javax.servlet.http.Part;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.name.Rename;
 
-@MultipartConfig(maxFileSize = 1024 * 1024 )
+@MultipartConfig(maxFileSize = 1024 * 1024 * 20)
 @WebServlet("/ex04/s8")
-public class Servlet05 extends GenericServlet {
+public class Servlet08 extends GenericServlet {
 
   private static final long serialVersionUID = 1L;
   private String uploadDir;
@@ -43,7 +43,7 @@ public class Servlet05 extends GenericServlet {
     PrintWriter out = res.getWriter();
     out.println("<html>");
     out.println("<head>");
-    out.println("<table>servlet04</title>");
+    out.println("<title>servlet08</title>");
     out.println("</head>");
     out.println("<body><h1>파일 업로드 결과</h1>");
 
@@ -76,47 +76,12 @@ public class Servlet05 extends GenericServlet {
     .toFiles(Rename.PREFIX_DOT_THUMBNAIL);;
     
     out.printf("사진=%s<br>\n", filename);
+    out.printf("<img src='../upload/thumbnail.%s.jpg'><br>\n", filename);
     out.printf("<img src='../upload/%s'><br>\n", filename);
     out.println("</body></html>");
 
   }
 }
-
-// <form> 태그의 enctype을 "multipart/form-data" 로 설정하면,
-// 웹 브라우저가 데이터를 전송할 때 다음과 같은 형식으로 보낸다.
-// 요청 프로토콜에서 Content-Type을 확인하라.
-// 
-/*
-POST /java-web/ex04/s4 HTTP/1.1
-Host: 192.168.0.4:8080
-Content-Length: 7222
-Pragma: no-cache
-Cache-Control: no-cache
-Origin: http://192.168.0.4:8080
-Upgrade-Insecure-Requests: 1
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryzVY11GiqDpSP3H8f
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,
-Referer: http://192.168.0.4:8080/java-web/ex04/test04.html
-Accept-Encoding: gzip, deflate
-Accept-Language: ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,la;q=0.6
-Connection: keep-alive
-빈 줄
-------WebKitFormBoundaryzVY11GiqDpSP3H8f
-Content-Disposition: form-data; name="name"
-
-홍길동
-------WebKitFormBoundaryzVY11GiqDpSP3H8f
-Content-Disposition: form-data; name="age"
-
-20
-------WebKitFormBoundaryzVY11GiqDpSP3H8f
-Content-Disposition: form-data; name="photo"; filename="images.jpeg"
-Content-Type: image/jpeg
-
-바이너리 데이터....
-------WebKitFormBoundaryzVY11GiqDpSP3H8f--
- */
 
 
 

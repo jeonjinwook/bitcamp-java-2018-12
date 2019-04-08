@@ -46,8 +46,8 @@
         <td><select name='lessonNo'>
 
             <%for (Lesson lesson : lessons) { %>
-            <option value=<%=lesson.getNo() %>
-              <%=board.getLessonNo() == lesson.getNo() ? " selected" : "" %>><%=lesson.getTitle() %>(<%=lesson.getStartDate() %>
+            <option value='<%=lesson.getNo() %>'
+              <%=board.getLessonNo() == lesson.getNo() ? "selected" : "" %>><%=lesson.getTitle() %>(<%=lesson.getStartDate() %>
               ~
               <%=lesson.getEndDate() %>)
             </option>

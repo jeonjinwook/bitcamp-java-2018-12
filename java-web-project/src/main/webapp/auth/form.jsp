@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean scope="request" id="email" class="java.lang.String"/>
 <!DOCTYPE html>
 <html>
 <head><title>로그인</title></head>
@@ -13,7 +12,7 @@
 <table border='1'>
 <tr>
   <th>이메일</th>
-  <td><input type='email' name='email' value='<%=email%>'></td>
+  <td><input type='email' name='email' value='${cookie.email.value}'></td>
 </tr>
 <tr>
   <th>암호</th>

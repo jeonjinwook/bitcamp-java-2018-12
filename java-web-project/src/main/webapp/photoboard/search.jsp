@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,16 +25,15 @@
       <th>조회수</th>
       <th>수업</th>
     </tr>
-<jsp:useBean scope="request" id="list" type="java.util.List<PhotoBoard>"/> 
-    <%for (PhotoBoard board : list) {%>
-    <tr>
-      <td><%=board.getNo() %></td>
-      <td><a href='detail?no=<%=board.getNo()%>'><%=board.getTitle() %></a></td>
-      <td><%=board.getCreatedDate() %></td>
-      <td><%=board.getViewCount() %></td>
-      <td><%=board.getLessonNo() %></td>
-    </tr>
-    <%} %>
+    <c:forEach items="${list}" var="board">
+      <tr>
+        <td>${board.no}</td>
+        <td><a href='detail?no=${board.no}'>${board.title}</a></td>
+        <td>${board.createdDate}</td>
+        <td>${board.viewCount}</td>
+        <td>${board.lessonNo}</td>
+      </tr>
+    </c:forEach>
   </table>
 </body>
 </html>

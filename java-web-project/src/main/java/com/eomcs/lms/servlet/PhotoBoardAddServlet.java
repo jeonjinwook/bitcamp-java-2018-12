@@ -26,17 +26,17 @@ import com.eomcs.lms.service.PhotoBoardService;
 public class PhotoBoardAddServlet extends HttpServlet {
 
   String uploadDir; 
-      
+
   @Override
   public void init() throws ServletException {
     this.uploadDir = this.getServletContext().getRealPath(
         "/upload/photoboard");
   }
-  
+
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    
+
     ServletContext sc = this.getServletContext();
     ApplicationContext iocContainer = 
         (ApplicationContext) sc.getAttribute("iocContainer");
@@ -44,8 +44,8 @@ public class PhotoBoardAddServlet extends HttpServlet {
         iocContainer.getBean(LessonService.class);
     List<Lesson> lessons = lessonService.list();
     request.setAttribute("lessons", lessons);
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/photoboard/form.jsp").include(request, response);
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "/photoboard/form.jsp");
   }
 
   @Override
@@ -63,14 +63,14 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     ArrayList<PhotoFile> files = new ArrayList<>();
     Collection<Part> photos = request.getParts();
-    
+
     for (Part photo : photos) {
       if (photo.getSize() == 0 || !photo.getName().equals("photo")) 
         continue;
-      
+
       String filename = UUID.randomUUID().toString();
       photo.write(uploadDir + "/" + filename);
-      
+
       PhotoFile file = new PhotoFile();
       file.setFilePath(filename);
       files.add(file);
@@ -80,7 +80,7 @@ public class PhotoBoardAddServlet extends HttpServlet {
     if (board.getLessonNo() == 0) {
       request.setAttribute("error.title", "사진 등록 오류");
       request.setAttribute("error.content", "사진 또는 파일을 등록할 수업을 선택하세요.");
-      
+
     } else if (files.size() == 0) {
       request.setAttribute("error.title", "사진 등록 오류");
       request.setAttribute("error.content", "최소 한 개의 사진 파일을 등록해야 합니다.");
@@ -91,11 +91,10 @@ public class PhotoBoardAddServlet extends HttpServlet {
 
     } else {
       photoBoardService.add(board);
-      response.sendRedirect("list");
+      // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+      request.setAttribute("viewUrl", "redirect:list");
       return;
     }
-    
-    request.getRequestDispatcher("/error.jsp").forward(request, response);
   }
 
 }

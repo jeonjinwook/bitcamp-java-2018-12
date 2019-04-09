@@ -1,9 +1,5 @@
-<%@page import="com.eomcs.lms.domain.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  Board board = (Board) request.getAttribute("board");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,17 +7,13 @@
 </head>
 <body>
 
-  <jsp:include page="/header.jsp" />
-  
-  <h1>게시물 조회(JSP)</h1>
+<jsp:include page="/header.jsp"/>
 
-  <%
-    if (board == null) {
-  %>
-  <p>해당 게시물이 없습니다.</p>
-  <%
-    } else {
-  %>
+  <h1>게시물 조회(JSP2)</h1>
+<jsp:useBean scope="request" id="board" type="com.eomcs.lms.domain.Board"/>  
+<%if (board == null) {%>
+  <p>해당 게시물이 없습니다</p>
+<%} else {%>
   <form action='update' method='post'>
     <table border='1'>
       <tr>
@@ -42,14 +34,10 @@
       </tr>
     </table>
     <p>
-      <a href='list'>목록</a><a href='../'>전체 목록</a> <a href='delete?no=<%=board.getNo()%>'>삭제</a>
+      <a href='list'>목록</a> <a href='delete?no=<%=board.getNo()%>'>삭제</a>
       <button type='submit'>변경</button>
     <p>
   </form>
-  <%
-    }
-  %>
+<%}%>
 </body>
-
-
 </html>

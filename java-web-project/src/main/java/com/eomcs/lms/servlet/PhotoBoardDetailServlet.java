@@ -1,4 +1,5 @@
 package com.eomcs.lms.servlet;
+
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -13,8 +14,8 @@ import com.eomcs.lms.domain.PhotoBoard;
 import com.eomcs.lms.service.LessonService;
 import com.eomcs.lms.service.PhotoBoardService;
 
-@SuppressWarnings("serial")
 @WebServlet("/photoboard/detail")
+@SuppressWarnings("serial")
 public class PhotoBoardDetailServlet extends HttpServlet {
 
   @Override
@@ -35,13 +36,13 @@ public class PhotoBoardDetailServlet extends HttpServlet {
     PhotoBoard board = photoBoardService.get(no);
     List<Lesson> lessons = lessonService.list();
     request.setAttribute("board", board);
-    request.setAttribute("lesson", lessons);
+    request.setAttribute("files", board.getFiles());
+    request.setAttribute("lessons", lessons);
     
     response.setContentType("text/html;charset=UTF-8");
     
- // JSP의 실행을 포함시킨다.
+    // JSP의 실행을 포함시킨다.
     request.getRequestDispatcher("/photoboard/detail.jsp").include(request, response);
   }
-
 
 }

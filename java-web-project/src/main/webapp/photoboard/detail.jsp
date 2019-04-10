@@ -73,7 +73,7 @@
             <th>사진</th>
             <td>
             <c:set var="contextRootPath" value="${pageContext.servletContext.contextPath}"></c:set>
-            <c:forEach items="${files}" var="files">
+            <c:forEach items="${board.files}" var="files">
               <img src='${contextRootPath}/upload/photoboard/${files.filePath}' style='height: 80px'>
             </c:forEach>
             </td>

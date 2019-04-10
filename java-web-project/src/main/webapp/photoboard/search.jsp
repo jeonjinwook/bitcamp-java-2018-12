@@ -15,7 +15,7 @@
     <a href='add'>새 사진</a>
   </p>
   <p>
-    <a href='../'>시스템 목록</a>
+    <a href='../../'>시스템 목록</a>
   </p>
   <table border='1'>
     <tr>

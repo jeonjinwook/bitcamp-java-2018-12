@@ -11,7 +11,7 @@
   <jsp:include page="/header.jsp" />
   <h1>사진 목록(JSP2 + EL + JSTL)</h1>
   <p>
-    <a href='add'>새 사진</a>
+    <a href='form'>새 사진</a>
   </p>
   <p>
     <a href='../../'>전체 목록</a>

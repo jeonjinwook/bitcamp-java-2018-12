@@ -42,11 +42,11 @@
             <c:choose>
                 <c:when test="${empty member.photo}">
                   <img src='${contextRootPath}/images/default.jpg' style='height: 80px'>
-                  <input type='file' name='photo'>
+                  <input type='file' name='photoFile'>
                 </c:when>
                 <c:otherwise>
                   <img src='${contextRootPath}/upload/member/${member.photo}' style='height: 80px'>
-                  <input type='file' name='photo'>
+                  <input type='file' name='photoFile'>
                 </c:otherwise>
               </c:choose>
               </td>

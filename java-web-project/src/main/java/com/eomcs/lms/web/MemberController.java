@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.lms.service.MemberService;
 
@@ -21,14 +22,14 @@ public class MemberController {
 
   @Autowired MemberService memberService;
   @Autowired ServletContext servletContext;
-  
+
   @GetMapping("form")
   public void form() throws Exception {
   }
-  
+
   @PostMapping("add")
   public String add(Member member, Part photoFile) throws Exception {
-      
+
     if (photoFile.getSize() > 0) {
       String filename = UUID.randomUUID().toString();
       String uploadDir = servletContext.getRealPath(
@@ -47,10 +48,10 @@ public class MemberController {
 
     if (memberService.delete(no) == 0) 
       throw new Exception("해당 번호의 회원이 없습니다.");
-    
-      return "redirect:../";
+
+    return "redirect:../";
   }
-  
+
   @GetMapping("{no}")
   public String detail(@PathVariable int no, Model model) throws Exception {
 
@@ -59,23 +60,58 @@ public class MemberController {
     model.addAttribute("member", member);
     return "member/detail";
   }
-  
-  @GetMapping
-  public String list(Model model) throws Exception {
 
-    List<Member> members = memberService.list(null);
+  @GetMapping
+  public String list(
+      @RequestParam(defaultValue = "1") int pageNo,
+      @RequestParam(defaultValue = "3") int pageSize,
+      Model model) throws Exception {
+
+    if (pageSize < 3 || pageSize > 8)
+      pageSize = 3;
+
+    int rowCount = memberService.size();
+    int totalPage = rowCount / pageSize;
+    if (rowCount % pageSize > 0)
+      totalPage++;
+    if (pageNo < 1)
+      pageNo = 1;
+    else if (pageNo > totalPage)
+      pageNo = totalPage;
+
+    List<Member> members = memberService.list(null,pageNo, pageSize);
     model.addAttribute("list", members);
+    model.addAttribute("pageNo", pageNo);
+    model.addAttribute("pageSize", pageSize);
+    model.addAttribute("totalPage", totalPage);
     return "member/list";
   }
-  
+
   @GetMapping("search")
-  public void search(String keyword, Model model) throws Exception {
+  public void search(
+      @RequestParam(defaultValue = "1") int pageNo,
+      @RequestParam(defaultValue = "3") int pageSize,
+      String keyword, Model model) throws Exception {
 
+    if (pageSize < 3 || pageSize > 8)
+      pageSize = 3;
 
-    List<Member> members = memberService.list(keyword);
+    int rowCount = memberService.size();
+    int totalPage = rowCount / pageSize;
+    if (rowCount % pageSize > 0)
+      totalPage++;
+    if (pageNo < 1)
+      pageNo = 1;
+    else if (pageNo > totalPage)
+      pageNo = totalPage;
+
+    List<Member> members = memberService.list(keyword,pageNo, pageSize);
     model.addAttribute("list", members);
+    model.addAttribute("pageNo", pageNo);
+    model.addAttribute("pageSize", pageSize);
+    model.addAttribute("totalPage", totalPage);
   }
-  
+
   @PostMapping("update")
   public String update(Member member, Part photoFile) throws Exception {
 

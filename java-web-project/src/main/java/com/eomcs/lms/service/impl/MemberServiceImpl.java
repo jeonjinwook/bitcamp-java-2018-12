@@ -13,49 +13,58 @@ import com.eomcs.lms.service.MemberService;
 // 이렇게 애노테이션으로 구분해두면 나중에 애노테이션으로 객체를 찾을 수 있다.
 @Service
 public class MemberServiceImpl implements MemberService {
-  
+
   MemberDao memberDao;
-  
+
   public MemberServiceImpl(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
-  
+
   // 비지니스 객체에서 메서드 이름은 가능한 업무 용어를 사용한다.
   @Override
-  public List<Member> list(String keyword) {
+  public List<Member> list(String keyword, int pageNo, int pageSize) {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("size", pageSize);
+    params.put("rowNo", (pageNo - 1) * pageSize);
     if (keyword == null)
-      return memberDao.findAll();
+      return memberDao.findAll(params);
     else 
       return memberDao.findByKeyword(keyword);
   }
-  
+
   @Override
   public int add(Member member) {
     return memberDao.insert(member);
   }
-  
+
   @Override
   public Member get(int no) {
     return memberDao.findByNo(no);
   }
-  
+
   @Override
   public int update(Member member) {
     return memberDao.update(member);
   }
-  
+
   @Override
   public int delete(int no) {
     return memberDao.delete(no);
   }
-  
+
   @Override
   public Member get(String email, String password) {
     HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("email", email);
     paramMap.put("password", password);
-    
+
     return memberDao.findByEmailPassword(paramMap);
+  }
+
+  @Override
+  public int size() {
+    // 전체 게시물의 개수
+    return memberDao.countAll();
   }
 }
 

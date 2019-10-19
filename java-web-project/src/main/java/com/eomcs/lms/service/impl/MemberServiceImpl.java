@@ -66,6 +66,11 @@ public class MemberServiceImpl implements MemberService {
     // 전체 게시물의 개수
     return memberDao.countAll();
   }
+
+  @Override
+  public Member get(String email) {
+    return memberDao.findByEmail(email);
+  }
 }
 
 

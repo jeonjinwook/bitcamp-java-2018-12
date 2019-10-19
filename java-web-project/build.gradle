@@ -53,8 +53,11 @@ dependencies {
     // log4j 2.x 라이브러리    
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
     
-    //JSTL 명세를 구현한 라이브러리
+    // JSTL 명세를 구현한 라이브러리
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+    
+    // JSON 형식을 다루는 라이브러리
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
     
 
     implementation 'com.google.guava:guava:26.0-jre'

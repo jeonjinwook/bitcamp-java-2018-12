@@ -39,8 +39,7 @@ public class BoardController {
   }
 
   @GetMapping("{no}")
-  public String detail(@PathVariable int no, Model model) throws Exception {
-
+  public String detail(@PathVariable int no, Model model) {
     Board board = boardService.get(no);
     model.addAttribute("board", board);
     return "board/detail";

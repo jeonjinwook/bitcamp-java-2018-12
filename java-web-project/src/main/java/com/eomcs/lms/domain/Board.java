@@ -1,20 +1,23 @@
 package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Board implements Cloneable, Serializable {
   private static final long serialVersionUID = 1L;
 
   private int no;
   private String contents;
+  
+  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
   private Date createdDate;
   private int viewCount;
-  
+
   @Override
   public Board clone() throws CloneNotSupportedException {
     return (Board) super.clone();
   }
-  
+
   @Override
   public String toString() {
     return "Board [no=" + no + ", contents=" + contents + ", createdDate=" + createdDate
@@ -45,6 +48,6 @@ public class Board implements Cloneable, Serializable {
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
   }
-  
-  
+
+
 }
